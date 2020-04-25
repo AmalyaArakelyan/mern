@@ -1,3 +1,4 @@
+import callApi from '../../util/apiCaller';
 // Export Constants
 export const ADD_COMMENT = 'ADD_COMMENT';
 
@@ -10,7 +11,14 @@ export function addComment(comment) {
 }
 
 export function addCommentRequest(date) {
+  debugger
   return (dispatch) => {
-    dispatch(addComment(date));
+    return callApi('comment', 'post', {
+      name: date.name,
+      comment: date.comment,
+      post: date.post,
+    }).then(res => {
+      dispatch(addComment(res));
+    });
   };
 }

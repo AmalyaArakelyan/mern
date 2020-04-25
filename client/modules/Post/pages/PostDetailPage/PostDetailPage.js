@@ -21,7 +21,7 @@ import AddComment from '../../../Comment/components/AddComment';
 class PostDetailPage extends Component {
 
   handleAddComment = (name, comment) => {
-    const post = this.props.post.cuid;
+    const post = this.props.post._id;
     this.props.dispatch(addCommentRequest({ name, comment, post }));
   };
 
@@ -62,6 +62,7 @@ PostDetailPage.propTypes = {
     content: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
