@@ -11,7 +11,6 @@ export function addComment(comment) {
 }
 
 export function addCommentRequest(date) {
-  debugger
   return (dispatch) => {
     return callApi('comment', 'post', {
       name: date.name,

@@ -35,7 +35,7 @@ class PostDetailPage extends Component {
           <p className={styles['author-name']}><FormattedMessage id="by" /> {post.name}</p>
           <p className={styles['post-desc']}>{post.content}</p>
         </div>
-        <CommentsList />
+        <CommentsList newComments={this.props.newComments} />
         <AddComment addComment={this.handleAddComment} />
       </div>
       : null
@@ -52,10 +52,12 @@ PostDetailPage.need = [params => {
 function mapStateToProps(state, props) {
   return {
     post: getPost(state, props.params.cuid),
+    newComments: state.comment.data,
   };
 }
 
 PostDetailPage.propTypes = {
+  newComments: PropTypes.array.isRequired,
   post: PropTypes.shape({
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
