@@ -13,6 +13,10 @@ import { fetchPost } from '../../PostActions';
 // Import Selectors
 import { getPost } from '../../PostReducer';
 
+// Import Components
+import CommentsList from '../../../Comment/CommentsList';
+import AddComment from '../../../Comment/AddComment';
+
 export function PostDetailPage(props) {
   return (
     <div>
@@ -22,6 +26,8 @@ export function PostDetailPage(props) {
         <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.name}</p>
         <p className={styles['post-desc']}>{props.post.content}</p>
       </div>
+      <CommentsList />
+      <AddComment />
     </div>
   );
 }
