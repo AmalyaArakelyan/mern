@@ -11,7 +11,6 @@ import remove from '../../App/icons/delete.png';
 import edit from '../../App/icons/edit.png';
 
 function CommentItem(props) {
-
   const { comment, type } = props;
   const style = (type === 'old') ? 'user-comment' : 'author-comment';
 
