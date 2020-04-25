@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 // Import Style
 import Style from './AddComment.css';
@@ -9,10 +10,10 @@ export class AddComment extends Component {
     return (
       <div className={Style['write-new']}>
         <form action="#" method="post">
-          <textarea placeholder="" name="comment" ref="comment"></textarea>
+          <textarea placeholder={this.props.intl.messages.createComment} name="comment" ref="comment"></textarea>
           <div>
-            <input type="text" placeholder="" name="auther" ref="auther"></input>
-            <button type="button" >submit</button>
+            <input type="text" placeholder={this.props.intl.messages.commentAuther} name="auther" ref="auther"></input>
+            <button type="button" ><FormattedMessage id="submit" /></button>
           </div>
         </form>
       </div>
@@ -21,6 +22,7 @@ export class AddComment extends Component {
 }
 
 AddComment.propTypes = {
+  intl: intlShape.isRequired,
 };
 
-export default AddComment;
+export default injectIntl(AddComment);
