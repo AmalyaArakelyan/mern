@@ -1,4 +1,5 @@
 import Post from '../models/post';
+import Coments from '../models/comment';
 import cuid from 'cuid';
 import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
@@ -53,11 +54,26 @@ export function addPost(req, res) {
  * @returns void
  */
 export function getPost(req, res) {
-  Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
+  Post.findOne({ cuid: req.params.cuid })
+  .exec((err, post) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({ post });
+    Coments.find({ post: post._id })
+    .exec((error, comment) => {
+      if (error) {
+        res.status(500).send(err);
+      }
+      // eslint-disable-next-line no-param-reassign
+      post.comment = comment;
+      const result = {
+        post,
+        comment,
+        id: post._id,
+        cuid: post.cuid,
+      };
+      res.json(result);
+    });
   });
 }
 

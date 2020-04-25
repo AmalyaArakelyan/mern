@@ -17,6 +17,7 @@ export function addCommentRequest(date) {
       comment: date.comment,
       post: date.post,
     }).then(res => {
+      debugger
       dispatch(addComment(res));
     });
   };

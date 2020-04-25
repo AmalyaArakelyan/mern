@@ -11,17 +11,17 @@ import styles from '../../components/PostListItem/PostListItem.css';
 import { fetchPost } from '../../PostActions';
 import { addCommentRequest } from '../../../Comment/CommentActions';
 
-// Import Selectors
-import { getPost } from '../../PostReducer';
-
 // Import Components
 import CommentsList from '../../../Comment/components/CommentsList';
 import AddComment from '../../../Comment/components/AddComment';
 
 class PostDetailPage extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchPost(this.props.params.cuid));
+  }
 
   handleAddComment = (name, comment) => {
-    const post = this.props.post._id;
+    const post = this.props.post.id;
     this.props.dispatch(addCommentRequest({ name, comment, post }));
   };
 
@@ -29,13 +29,13 @@ class PostDetailPage extends Component {
     const post = this.props.post;
     return (post
       ? <div>
-        <Helmet title={post.title} />
+        <Helmet title={post.post.title} />
         <div className={`${styles['single-post']} ${styles['post-detail']}`}>
-          <h3 className={styles['post-title']}>{post.title}</h3>
-          <p className={styles['author-name']}><FormattedMessage id="by" /> {post.name}</p>
-          <p className={styles['post-desc']}>{post.content}</p>
+          <h3 className={styles['post-title']}>{post.post.title}</h3>
+          <p className={styles['author-name']}><FormattedMessage id="by" /> {post.post.name}</p>
+          <p className={styles['post-desc']}>{post.post.content}</p>
         </div>
-        <CommentsList newComments={this.props.newComments} />
+        <CommentsList newComments={this.props.newComments} comments={this.props.post.comment} />
         <AddComment addComment={this.handleAddComment} />
       </div>
       : null
@@ -49,9 +49,9 @@ PostDetailPage.need = [params => {
 }];
 
 // Retrieve data from store as props
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return {
-    post: getPost(state, props.params.cuid),
+    post: state.posts.post,
     newComments: state.comment.data,
   };
 }
@@ -59,13 +59,12 @@ function mapStateToProps(state, props) {
 PostDetailPage.propTypes = {
   newComments: PropTypes.array.isRequired,
   post: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
+    post: PropTypes.object.isRequired,
+    comment: PropTypes.array.isRequired,
     cuid: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
+  params: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
