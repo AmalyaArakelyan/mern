@@ -3,7 +3,7 @@ import React from 'react';
 // Import Components
 import Item from './CommentItem';
 // Import Style
-import Style from './AddComment.css';
+import Style from './Comment.css';
 
 
 function CommentList() {

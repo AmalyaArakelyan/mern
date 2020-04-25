@@ -2,11 +2,11 @@ import React from 'react';
 // Import Components
 
 // Import Style
-import Style from './AddComment.css';
+import Style from './Comment.css';
 
 // Import Icons
-import remove from '../App/icons/delete.png';
-import edit from '../App/icons/edit.png';
+import remove from '../../App/icons/delete.png';
+import edit from '../../App/icons/edit.png';
 
 function CommentItem() {
   return (
