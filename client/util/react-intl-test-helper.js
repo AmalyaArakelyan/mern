@@ -33,3 +33,11 @@ export const mountWithIntl = node => {
     childContextTypes: { intl: intlShape },
   });
 };
+
+// Get updated
+export const getUpdated = (array, newItem) => {
+  const newArray = [...array];
+  const foundIndex = newArray.findIndex(item => item.cuid === newItem.cuid);
+  newArray[foundIndex] = newItem;
+  return newArray;
+};

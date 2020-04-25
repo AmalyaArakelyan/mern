@@ -14,6 +14,8 @@ export default {
     submit: 'Submit',
     commentAuther: 'Type your name',
     createComment: 'Write a coment',
+    save: 'Save',
+    cancel: 'cancel',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
     	  =1 {has # comment}

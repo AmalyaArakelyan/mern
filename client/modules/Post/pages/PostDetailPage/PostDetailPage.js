@@ -9,7 +9,7 @@ import styles from '../../components/PostListItem/PostListItem.css';
 
 // Import Actions
 import { fetchPost } from '../../PostActions';
-import { addCommentRequest } from '../../../Comment/CommentActions';
+import { addCommentRequest, deleteCommentRequest, updateCommentRequest } from '../../../Comment/CommentActions';
 
 // Import Components
 import CommentsList from '../../../Comment/components/CommentsList';
@@ -25,6 +25,16 @@ class PostDetailPage extends Component {
     this.props.dispatch(addCommentRequest({ name, comment, post }));
   };
 
+  deleteComment = (id, type) => {
+    if (confirm('Do you want to delete this comment')) {
+      this.props.dispatch(deleteCommentRequest(id, type));
+    }
+  };
+
+  saveComment = (comment, cuid, type) => {
+    this.props.dispatch(updateCommentRequest(comment, cuid, type));
+  };
+
   render() {
     const post = this.props.post;
     return (post
@@ -35,7 +45,12 @@ class PostDetailPage extends Component {
           <p className={styles['author-name']}><FormattedMessage id="by" /> {post.post.name}</p>
           <p className={styles['post-desc']}>{post.post.content}</p>
         </div>
-        <CommentsList newComments={this.props.newComments} comments={this.props.post.comment} />
+        <CommentsList
+          newComments={this.props.newComments}
+          comments={this.props.post.comment}
+          deleteComment={this.deleteComment}
+          saveComment={this.saveComment}
+        />
         <AddComment addComment={this.handleAddComment} />
       </div>
       : null

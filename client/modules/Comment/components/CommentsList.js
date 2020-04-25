@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 // Import Components
 import Item from './CommentItem';
+
 // Import Style
 import Style from './Comment.css';
 
 function CommentList(props) {
-  const { comments, newComments } = props;
+  const { comments, newComments, deleteComment, saveComment } = props;
   return (
     <div className="listView">
       <ul className={Style['comment-section']}>
@@ -16,6 +17,8 @@ function CommentList(props) {
           return (<Item
             key={comment.cuid}
             comment={comment}
+            saveComment={saveComment}
+            deleteComment={deleteComment}
             type="old"
           />);
         })}
@@ -23,6 +26,8 @@ function CommentList(props) {
           return (<Item
             key={comment.cuid}
             comment={comment}
+            saveComment={saveComment}
+            deleteComment={deleteComment}
             type="new"
           />);
         })}
@@ -34,6 +39,8 @@ function CommentList(props) {
 CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   newComments: PropTypes.array.isRequired,
+  deleteComment: PropTypes.func.isRequired,
+  saveComment: PropTypes.func.isRequired,
 };
 
 export default CommentList;

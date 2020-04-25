@@ -7,7 +7,7 @@ import PostListItem from './PostListItem/PostListItem';
 function PostList(props) {
   return (
     <div className="listView">
-      {
+      {props.posts &&
         props.posts.map(post => (
           <PostListItem
             post={post}

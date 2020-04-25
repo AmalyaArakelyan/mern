@@ -26,3 +26,40 @@ export function addComment(req, res) {
     return res.json(saved);
   });
 }
+
+/**
+ * Update a Comment
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function updateComment(req, res) {
+  Comment.findOneAndUpdate(
+    { cuid: req.params.cuid },
+      JSON.parse(JSON.stringify(req.body)),
+      { upsert: true })
+      .exec((err, saved) => {
+        if (err) {
+          res.status(500).send(err);
+        }
+        return res.json(saved);
+      });
+}
+
+/**
+ * Delete a Comment
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function deleteComment(req, res) {
+  Comment.findOne({ cuid: req.params.cuid }).exec((err, comment) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+    comment.remove(() => {
+      res.status(200).end();
+    });
+  });
+}
