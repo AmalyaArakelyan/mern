@@ -1,13 +1,19 @@
-import { ADD_POST, ADD_POSTS, DELETE_POST } from './PostActions';
+import { ADD_POST, ADD_POSTS, DELETE_POST, GET_POST, DELETE_COMMENT, UPDATE_COMMENT } from './PostActions';
+import { getUpdated } from '../../util/react-intl-test-helper';
 
 // Initial State
-const initialState = { data: [] };
+const initialState = { data: [], post: null };
 
 const PostReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST :
       return {
         data: [action.post, ...state.data],
+      };
+    case GET_POST :
+      return {
+        ...state,
+        post: action.post,
       };
 
     case ADD_POSTS :
@@ -18,6 +24,16 @@ const PostReducer = (state = initialState, action) => {
     case DELETE_POST :
       return {
         data: state.data.filter(post => post.cuid !== action.cuid),
+      };
+
+    case DELETE_COMMENT :
+      return {
+        post: { ...state.post, comment: state.post.comment.filter(item => item.cuid !== action.cuid) },
+      };
+
+    case UPDATE_COMMENT :
+      return {
+        post: { ...state.post, comment: getUpdated(state.post.comment, action.comment) },
       };
 
     default:
